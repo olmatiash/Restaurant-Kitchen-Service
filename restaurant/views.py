@@ -40,8 +40,8 @@ def index(request):
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
     model = DishType
-    context_object_name = "dish-type_list"
-    template_name = "restaurant/dish-type_list.html"
+    context_object_name = "dish_type_list"
+    template_name = "restaurant/dish_type_list.html"
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -63,24 +63,24 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
 class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = DishType
     fields = "__all__"
-    success_url = reverse_lazy("restaurant/dish-type-list")
+    success_url = reverse_lazy("restaurant:dish-type-list")
 
 
 class DishTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = DishType
     fields = "__all__"
-    success_url = reverse_lazy("restaurant/dish-type-list")
+    success_url = reverse_lazy("restaurant:dish-type-list")
 
 
 class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = DishType
-    success_url = reverse_lazy("restaurant/dish-type-list")
+    success_url = reverse_lazy("restaurant:dish-type-list")
 
 
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
     paginate_by = 5
-    queryset = Dish.objects.all().select_related("dish-type")
+    queryset = Dish.objects.all().select_related("dish_type")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DishListView, self).get_context_data(**kwargs)
@@ -89,10 +89,10 @@ class DishListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Dish.objects.select_related("dish-type")
+        queryset = Dish.objects.select_related("dish_type")
         form = DishNameSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(model__icontains=form.cleaned_data["name"])
+            return queryset.filter(name__contains=form.cleaned_data["name"])
         return queryset
 
 
