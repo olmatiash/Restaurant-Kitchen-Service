@@ -35,21 +35,19 @@ class CookExperienceUpdateForm(forms.ModelForm):
         model = Cook
         fields = ["years_of_experience"]
 
-    def clean_license_number(self):
+    def clean_years_of_experience(self):
         return validate_years_of_experience(self.cleaned_data["years_of_experience"])
 
 
 def validate_years_of_experience(
     years_of_experience,
 ):
-    if len(years_of_experience) != 1:
-        raise ValidationError("years_of_experience should consist of 1 characters")
-    if len(years_of_experience) != 2:
-        raise ValidationError("years_of_experience should consist of 2 characters")
-    if len(years_of_experience) > 0:
-        raise ValidationError("years_of_experience should be greater than zero")
-    elif not years_of_experience[:2].isdigit():
-        raise ValidationError("All characters should be digits")
+    try:
+        years_of_experience = int(years_of_experience)
+        if years_of_experience <= 0:
+            raise ValidationError("Years of experience should be greater than zero")
+    except ValueError:
+        raise ValidationError("Years of experience should be a valid positive integer")
 
     return years_of_experience
 

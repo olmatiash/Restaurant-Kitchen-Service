@@ -10,8 +10,8 @@ from .models import Cook, Dish, DishType
 from .forms import (
     DishForm,
     CookCreationForm,
-    CookExperienceUpdateForm,
     CookUsernameSearchForm,
+    CookExperienceUpdateForm,
     DishNameSearchForm,
     DishTypeNameSearchForm,
 )
@@ -158,7 +158,7 @@ class CookExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
-    success_url = reverse_lazy("")
+    success_url = reverse_lazy("restaurant:cook-list")
 
 
 @login_required

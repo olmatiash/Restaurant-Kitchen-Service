@@ -15,7 +15,7 @@ from restaurant.views import (
     CookDetailView,
     CookCreateView,
     CookDeleteView,
-    CookExperienceUpdateView
+    CookExperienceUpdateView,
 )
 
 urlpatterns = [
