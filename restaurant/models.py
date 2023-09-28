@@ -15,6 +15,7 @@ class DishType(models.Model):
 
 class Cook(AbstractUser):
     years_of_experience = models.IntegerField()
+    contract_size = models.IntegerField(default=160)
 
     class Meta:
         verbose_name = "cook"
@@ -37,6 +38,21 @@ class Dish(models.Model):
     class Meta:
         verbose_name = "dish"
         verbose_name_plural = "dishes"
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=255)
+    provider = models.CharField(max_length=255)
+    unit = models.CharField(max_length=10)
+    purchase_price = models.DecimalField(decimal_places=2, max_digits=2)
+    dishes = models.ManyToManyField(Dish, related_name="ingredients")
+
+    class Meta:
+        verbose_name = "ingredient"
+        verbose_name_plural = "ingredients"
 
     def __str__(self):
         return self.name
