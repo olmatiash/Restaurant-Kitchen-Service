@@ -3,13 +3,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from restaurant.models import Dish, Cook
+from restaurant.models import Dish, Cook, Ingredient
 
 
 class DishForm(forms.ModelForm):
     cooks = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
+    )
+
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
     )
 
     class Meta:
@@ -24,6 +30,7 @@ class CookCreationForm(UserCreationForm):
             "years_of_experience",
             "first_name",
             "last_name",
+            "contract_size",
         )
 
     def clean_years_of_experience(self):
@@ -33,7 +40,7 @@ class CookCreationForm(UserCreationForm):
 class CookExperienceUpdateForm(forms.ModelForm):
     class Meta:
         model = Cook
-        fields = ["years_of_experience"]
+        fields = ["years_of_experience", "contract_size"]
 
     def clean_years_of_experience(self):
         return validate_years_of_experience(self.cleaned_data["years_of_experience"])
@@ -71,6 +78,26 @@ class DishNameSearchForm(forms.Form):
 
 
 class DishTypeNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
+    )
+
+
+class IngredientForm(forms.ModelForm):
+    dishes = forms.ModelMultipleChoiceField(
+        queryset=Dish.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    class Meta:
+        model = Ingredient
+        fields = "__all__"
+
+
+class IngredientNameSearchForm(forms.Form):
     name = forms.CharField(
         max_length=255,
         required=False,
