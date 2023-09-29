@@ -14,6 +14,12 @@
   <p>Dish Type:
     {{ dish.dish_type.name }}
     <br>
+    Ingredients:
+      {% for ingredient in dish.ingredients.all %}
+      {{ ingredient.name }}
+      {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    <br>
     Description:
     {{ dish.description }}
     <br>
