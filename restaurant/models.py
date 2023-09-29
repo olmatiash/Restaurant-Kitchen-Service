@@ -47,7 +47,7 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=255)
     provider = models.CharField(max_length=255)
     unit = models.CharField(max_length=10)
-    purchase_price = models.DecimalField(decimal_places=2, max_digits=2)
+    purchase_price = models.DecimalField(max_digits=7, decimal_places=2)
     dishes = models.ManyToManyField(Dish, related_name="ingredients")
 
     class Meta:
