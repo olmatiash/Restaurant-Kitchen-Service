@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
   <h1>
     {{ dish.name }}
@@ -19,6 +18,9 @@
       {{ ingredient.name }}
       {% if not forloop.last %}, {% endif %}
       {% endfor %}
+    <br>
+    Total cost:
+    {{ dish.total_cost }}
     <br>
     Description:
     {{ dish.description }}
@@ -43,7 +45,8 @@
   <hr>
   <ul>
     {% for cook in dish.cooks.all %}
-      <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
+      <li><a href="{{ cook.get_absolute_url }}">{{ cook.username }} {% if user == cook %} (Me){% endif %}</a>
+      ({{ cook.first_name }} {{ cook.last_name }})</li>
     {% endfor %}
   </ul>
 {% endblock %}

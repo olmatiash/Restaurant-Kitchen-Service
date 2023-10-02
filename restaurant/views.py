@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, request
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import RedirectView
 
 from .models import Cook, Dish, DishType, Ingredient
 from .forms import (
@@ -62,6 +63,10 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+class DishTypeDetailView(LoginRequiredMixin, generic.DetailView):
+    model = DishType
+
+
 class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = DishType
     fields = "__all__"
@@ -100,6 +105,14 @@ class DishListView(LoginRequiredMixin, generic.ListView):
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
     model = Dish
+
+    def dish_detail_view(self, dish_id):
+        dish = Dish.objects.get(pk=dish_id)
+        dish(total_cost=dish.ingredients.all().sum())
+        context = {
+            "dish": dish,
+        }
+        return render(self, "restaurant/dish_detail.html", context=context)
 
 
 class DishCreateView(LoginRequiredMixin, generic.CreateView):
