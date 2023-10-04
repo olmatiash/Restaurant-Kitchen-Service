@@ -13,15 +13,20 @@
       <input class="btn btn-secondary" type="submit" value="🔍">
   </form>
   {% if ingredient_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
       {% for ingredient in ingredient_list %}
-        <li>
-          <a href="{% url "restaurant:ingredient-detail" pk=ingredient.id %} ">{{ ingredient.name }}</a>
-
-        </li>
+        <tr>
+          <td>{{ ingredient.id }}</td>
+          <td><a href="{% url "restaurant:ingredient-detail" pk=ingredient.id %} ">{{ ingredient.name }}</a></td>
+        </tr>
       {% endfor %}
-    </ul>
+
   {% else %}
     <p>There are no ingredients in restaurant</p>
   {% endif %}
+    </table>
 {% endblock %}

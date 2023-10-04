@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dish Type: {{ dishtype.name }}</h1>
+  <ul>
+    {% for dish in dishtype.dish_types.all %}
+      <li>
+        <strong><a href="{% url "restaurant:dish-detail" pk=dish.id %} ">{{ dish.name }}</a></strong>
+      </li>
+    {% empty %}
+      <li>No dishes available for this dish type.</li>
+    {% endfor %}
+  </ul>
+  <br>
+  <h4><a href="{% url 'restaurant:dish-type-list' %}">Back to Dish Types</a></h4>
+{% endblock %}

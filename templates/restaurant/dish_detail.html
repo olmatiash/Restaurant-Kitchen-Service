@@ -49,4 +49,7 @@
       ({{ cook.first_name }} {{ cook.last_name }})</li>
     {% endfor %}
   </ul>
+  <br>
+  <h4><a href="{% url 'restaurant:dish-list' %}">Back to Dishes</a></h4>
+
 {% endblock %}

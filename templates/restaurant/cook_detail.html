@@ -11,24 +11,32 @@
       Update
     </a>
   </h2>
-
   <p><strong>First name:</strong> {{ cook.first_name }}</p>
   <p><strong>Last name:</strong> {{ cook.last_name }}</p>
   <p><strong>Years of experience:</strong> {{ cook.years_of_experience }}</p>
   <p><strong>Is staff:</strong> {{ cook.is_staff }}</p>
   <p><strong>Size of contract:</strong> {{ cook.contract_size }}</p>
-
+  <br>
+  <h4><a href="{% url 'restaurant:cook-list' %}">Back to Cooks</a></h4>
+  <br>
   <div class="ml-3">
-    <h4>Dishes</h4>
-
+    <h2>Dishes</h2>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Dish Type</th>
+        <th>ID</th>
+      </tr>
     {% for dish in cook.dishes.all %}
-        <hr>
-        <p><strong>Name:</strong> {{ dish.name }}</p>
-        <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{dish.id}}</p>
-
+        <tr>
+          <td><a href="{% url "restaurant:dish-detail" pk=dish.id %} ">{{ dish.name }}</a></td>
+          <td> {{ dish.dish_type.name }}</td>
+          <td class="text-muted"><strong>Id:</strong> {{dish.id}}</td>
+        </tr>
     {% empty %}
       <p>No dishes!</p>
     {% endfor %}
+    </table>
   </div>
+
 {% endblock %}
