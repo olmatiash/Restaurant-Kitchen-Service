@@ -13,6 +13,9 @@
   <p>Dish Type:
     {{ dish.dish_type.name }}
     <br>
+    Description:
+    {{ dish.description }}
+    <br>
     Ingredients:
       {% for ingredient in dish.ingredients.all %}
       {{ ingredient.name }}
@@ -20,13 +23,13 @@
       {% endfor %}
     <br>
     Total cost:
-    {{ dish.total_cost }}
-    <br>
-    Description:
-    {{ dish.description }}
+    {{ dish.total_cost }} $
     <br>
     Price:
-    {{ dish.price }}
+    {{ dish.price }} $
+    <br>
+    Margin:
+    {{ dish.calculate_margin }} %
   </p>
   <h1>
     Cooks
