@@ -90,6 +90,7 @@ class IngredientForm(forms.ModelForm):
     dishes = forms.ModelMultipleChoiceField(
         queryset=Dish.objects.all(),
         widget=forms.CheckboxSelectMultiple,
+        required=False,
     )
 
     class Meta:
