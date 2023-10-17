@@ -14,7 +14,9 @@ from .forms import (
     CookUsernameSearchForm,
     CookExperienceUpdateForm,
     DishNameSearchForm,
-    DishTypeNameSearchForm, IngredientNameSearchForm, IngredientForm,
+    DishTypeNameSearchForm,
+    IngredientNameSearchForm,
+    IngredientForm,
 )
 
 
@@ -65,6 +67,8 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
 
 class DishTypeDetailView(LoginRequiredMixin, generic.DetailView):
     model = DishType
+    fields = "__all__"
+    success_url = reverse_lazy("restaurant:dish-type-detail")
 
 
 class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
@@ -197,6 +201,16 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
         name = self.request.GET.get("name", "")
         context["search_form"] = IngredientNameSearchForm(initial={"name": name})
         return context
+
+    def get_queryset(self):
+        queryset = Ingredient.objects.all()
+        form = IngredientNameSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
 
 
 class IngredientDetailView(LoginRequiredMixin, generic.DetailView):

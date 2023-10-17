@@ -1,16 +1,15 @@
 [
   {
-    "model": "restaurant.dishtype",
+    "model": "restaurant.dish",
     "pk": 1,
     "fields": {
-      "name": "pizza"
-    }
-  },
-    {
-    "model": "restaurant.dishtype",
-    "pk": 2,
-    "fields": {
-      "name": "sushi"
+      "name": "MARGHERITA",
+      "description": "fresh basil, fresh mozzarella",
+      "price": 14.20,
+      "dish_type": 1,
+      "cooks": [
+        2
+      ]
     }
   }
 ]

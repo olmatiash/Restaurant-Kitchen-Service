@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "base-presentation.html" %}
 
 {% block content %}
+  {% include "includes/sidebar.html" %}
   <h1>Delete ingredient?</h1>
   <form action="" method="post">
     {% csrf_token %}

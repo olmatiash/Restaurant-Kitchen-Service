@@ -1,17 +1,107 @@
-{% extends "base.html" %}
+{% extends 'base-presentation.html' %}
+
+{% block title %} Home Page {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} index-page {% endblock body_class %}
 
 {% block content %}
-    <h1>Restaurant kitchen Service</h1>
-    <h3>The Restaurant kitchen service has at its disposal:</h3>
-    <ul>
-        <li><strong>Cooks:</strong> {{ num_cooks }}</li>
-        <li><strong>Dishes:</strong> {{ num_dishes }}</li>
-        <li><strong>Dish Types:</strong> {{ num_dish_types }}</li>
-        <li><strong>Ingredients:</strong> {{ num_ingredients }}</li>
-    </ul>
+<nav class="navbar-expand-lg navbar-light bg-gradient-secondary">
+  <div class="container">
+    <div class="navbar-absolute">
+      {% if user.is_authenticated %}
+        <span class="nav-item lead text-gradient text-dark flex-grow-1">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></span>
+        <a href="{% url 'logout'%}?next={{request.path}}" class="nav-item lead text-gradient text-dark flex-grow-1">Logout</a>
+      {% else %}
+        <a href="{% url 'login'%}?next={{request.path}}" class="nav-item lead text-gradient text-dark flex-grow-1">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+  <header class="header-2">
+    <div class="page-header section-height-75 relative" style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/pexels-elle-hughes-2696064.jpg')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-primary pt-3 mt-n5">
+              <a class="text-primary" target="_blank" href="/">Restaurant Kitchen Service</a>
+            </h1>
+            <p class="lead text-light mt-3">
+              Management system to improve the communication & rules between cooks on the kitchen
+            </p>
+            <br>
 
-    <p>You have visited this page
-        {{ num_visits }} time{{ num_visits|pluralize }}.
-    </p>
+            <br>
 
-{% endblock %}
+            <br>
+          </div>
+        </div>
+      </div>
+      <div class="position-absolute w-100 z-index-1 bottom-0">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="moving-waves">
+            <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)" />
+            <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)" />
+            <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)" />
+            <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,0.95" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+  <section class="pt-3 pb-4" id="count-stats">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
+          <div class="row">
+            <div class="col-md-4 position-relative">
+              <div class="p-3 text-center">
+                <h1 class="text-gradient text-primary"><span id="state1">{{ num_cooks }}</span></h1>
+                <h5 class="mt-3"><a href="{% url 'restaurant:cook-list' %}">Cooks</a></h5>
+                <p class="text-sm"><a href="{% url 'restaurant:cook-list' %}">Click here to see information about cooks</a></p>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4 position-relative">
+              <div class="p-3 text-center">
+                <h1 class="text-gradient text-primary"> <span id="state2">{{ num_dishes }}</span></h1>
+                <h5 class="mt-3"><a href="{% url 'restaurant:dish-list' %}">Dishes</a></h5>
+                <p class="text-sm"><a href="{% url 'restaurant:dish-list' %}">Click here to see information about dishes</a></p>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 text-center">
+                <h1 class="text-gradient text-primary" id="state3">{{ num_dish_types }}</h1>
+                <h5 class="mt-3"><a href="{% url 'restaurant:dish-type-list' %}">Dish Types</a></h5>
+                <p class="text-sm"><a href="{% url 'restaurant:dish-type-list' %}">Click here to see information about dish types</a></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 text-center">
+                <h1 class="text-gradient text-primary" id="state3"></h1>
+                <h5 class="mt-3"></h5>
+                <p class="text-sm"></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-3 text-center">
+                <h1 class="text-gradient text-primary" id="state3">{{ num_ingredients }}</h1>
+                <h5 class="mt-3"><a href="{% url 'restaurant:ingredient-list' %}">Ingredients</a></h5>
+                <p class="text-sm"><a href="{% url 'restaurant:ingredient-list' %}">Click here to see information about ingredients</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

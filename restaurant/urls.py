@@ -21,6 +21,7 @@ from restaurant.views import (
     IngredientCreateView,
     IngredientDetailView,
     IngredientListView,
+    DishTypeDetailView,
 )
 
 urlpatterns = [
@@ -30,6 +31,9 @@ urlpatterns = [
         DishTypeListView.as_view(),
         name="dish-type-list",
     ),
+    path("dishtypes/<int:pk>/",
+         DishTypeDetailView.as_view(),
+         name="dish-type-detail"),
     path(
         "dishtypes/create/",
         DishTypeCreateView.as_view(),
