@@ -17,7 +17,7 @@ class DishType(models.Model):
 
 
 class Cook(AbstractUser):
-    years_of_experience = models.IntegerField()
+    years_of_experience = models.IntegerField(null=True)
     contract_size = models.IntegerField(default=160)
 
     class Meta:
@@ -42,7 +42,7 @@ class Ingredient(models.Model):
         verbose_name_plural = "ingredients"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.provider} {self.unit} {self.purchase_price})"
 
 
 class Dish(models.Model):
