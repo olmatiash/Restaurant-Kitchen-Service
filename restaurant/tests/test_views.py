@@ -126,3 +126,31 @@ class PrivateDishTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context["dish_list"]), list(dishes))
         self.assertTemplateUsed(response, "restaurant/dish_list.html")
+
+
+class PublicIngredientTest(TestCase):
+    def test_login_required(self):
+        """Test that Ingredient list is not displayed where
+        we are not logged in"""
+        response = self.client.get(INGREDIENT_URL)
+
+        self.assertNotEqual(response.status_code, 200)
+
+
+class PrivateIngredientTest(TestCase):
+    def setUp(self) -> None:
+        self.user = get_user_model().objects.create_user(
+            "test", "qaz123", "QWE12345"
+        )
+        self.client.force_login(self.user)
+
+    def test_retrieve_cook(self):
+        """Test displaying Ingredient list when we logged in
+        and views using correct template"""
+        Ingredient.objects.create(name="test name", provider="testprov", unit="1kg", purchase_price=6.50)
+        response = self.client.get(INGREDIENT_URL)
+        ingredients = Ingredient.objects.all()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["ingredient_list"]), list(ingredients))
+        self.assertTemplateUsed(response, "restaurant/ingredient_list.html")
