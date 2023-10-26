@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 
@@ -174,14 +174,14 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("restaurant:cook-list")
 
 
-@login_required
-def toggle_assign_to_dish(request, pk):
-    cook = Cook.objects.get(id=request.user.id)
-    if Dish.objects.get(id=pk) in cook.dishes.all():
-        cook.dishes.remove(pk)
-    else:
-        cook.dishes.add(pk)
-    return HttpResponseRedirect(reverse_lazy("restaurant:dish-detail", args=[pk]))
+class ToggleAssignToDishView(View):
+    def get(self, request, pk):
+        cook = Cook.objects.get(id=request.user.id)
+        if Dish.objects.get(id=pk) in cook.dishes.all():
+            cook.dishes.remove(pk)
+        else:
+            cook.dishes.add(pk)
+        return HttpResponseRedirect(reverse_lazy("restaurant:dish-detail", args=[pk]))
 
 
 class IngredientListView(LoginRequiredMixin, generic.ListView):
