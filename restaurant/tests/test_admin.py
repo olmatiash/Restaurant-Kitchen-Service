@@ -9,14 +9,11 @@ class AdminSiteTests(TestCase):
     def setUp(self) -> None:
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
-            username="admin",
-            password="testadmin"
+            username="admin", password="testadmin"
         )
         self.client.force_login(self.admin_user)
         self.cook = Cook.objects.create(
-            username="cook",
-            password="testcook",
-            years_of_experience=5
+            username="cook", password="testcook", years_of_experience=5
         )
 
     def test_cook_years_of_experience_listed(self):

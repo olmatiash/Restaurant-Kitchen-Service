@@ -5,39 +5,53 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('restaurant', '0002_alter_cook_years_of_experience'),
+        ("restaurant", "0002_alter_cook_years_of_experience"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='dish',
-            options={'verbose_name': 'dish', 'verbose_name_plural': 'dishes'},
+            name="dish",
+            options={"verbose_name": "dish", "verbose_name_plural": "dishes"},
         ),
         migrations.AddField(
-            model_name='cook',
-            name='contract_size',
+            model_name="cook",
+            name="contract_size",
             field=models.IntegerField(default=160),
         ),
         migrations.AlterField(
-            model_name='dish',
-            name='cooks',
-            field=models.ManyToManyField(related_name='dishes', to=settings.AUTH_USER_MODEL),
+            model_name="dish",
+            name="cooks",
+            field=models.ManyToManyField(
+                related_name="dishes", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.CreateModel(
-            name='Ingredient',
+            name="Ingredient",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('provider', models.CharField(max_length=255)),
-                ('unit', models.CharField(max_length=10)),
-                ('purchase_price', models.DecimalField(decimal_places=2, max_digits=2)),
-                ('dishes', models.ManyToManyField(related_name='ingredients', to='restaurant.dish')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("provider", models.CharField(max_length=255)),
+                ("unit", models.CharField(max_length=10)),
+                ("purchase_price", models.DecimalField(decimal_places=2, max_digits=2)),
+                (
+                    "dishes",
+                    models.ManyToManyField(
+                        related_name="ingredients", to="restaurant.dish"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'ingredient',
-                'verbose_name_plural': 'ingredients',
+                "verbose_name": "ingredient",
+                "verbose_name_plural": "ingredients",
             },
         ),
     ]

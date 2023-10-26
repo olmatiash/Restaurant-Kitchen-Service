@@ -52,9 +52,7 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DishTypeListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = DishTypeNameSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = DishTypeNameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
@@ -143,9 +141,7 @@ class CookListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CookListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
-        context["search_form"] = CookUsernameSearchForm(
-            initial={"username": username}
-        )
+        context["search_form"] = CookUsernameSearchForm(initial={"username": username})
         return context
 
     def get_queryset(self):
@@ -153,9 +149,7 @@ class CookListView(LoginRequiredMixin, generic.ListView):
         form = CookUsernameSearchForm(self.request.GET)
 
         if form.is_valid():
-            return queryset.filter(
-                username__icontains=form.cleaned_data["username"]
-            )
+            return queryset.filter(username__icontains=form.cleaned_data["username"])
 
         return queryset
 
@@ -183,9 +177,7 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
 @login_required
 def toggle_assign_to_dish(request, pk):
     cook = Cook.objects.get(id=request.user.id)
-    if (
-        Dish.objects.get(id=pk) in cook.dishes.all()
-    ):
+    if Dish.objects.get(id=pk) in cook.dishes.all():
         cook.dishes.remove(pk)
     else:
         cook.dishes.add(pk)
@@ -207,9 +199,7 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
         form = IngredientNameSearchForm(self.request.GET)
 
         if form.is_valid():
-            return queryset.filter(
-                name__icontains=form.cleaned_data["name"]
-            )
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
 
 

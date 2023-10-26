@@ -9,7 +9,17 @@ from .models import DishType, Cook, Dish, Ingredient
 class CookAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("years_of_experience",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info", {"fields": ("years_of_experience", "contract_size",)}),)
+        (
+            (
+                "Additional info",
+                {
+                    "fields": (
+                        "years_of_experience",
+                        "contract_size",
+                    )
+                },
+            ),
+        )
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (

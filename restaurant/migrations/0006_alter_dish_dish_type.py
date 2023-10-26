@@ -5,15 +5,18 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('restaurant', '0005_remove_ingredient_dishes_dish_ingredients'),
+        ("restaurant", "0005_remove_ingredient_dishes_dish_ingredients"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='dish',
-            name='dish_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dish_types', to='restaurant.dishtype'),
+            model_name="dish",
+            name="dish_type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="dish_types",
+                to="restaurant.dishtype",
+            ),
         ),
     ]

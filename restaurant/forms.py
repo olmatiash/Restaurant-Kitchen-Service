@@ -15,7 +15,7 @@ class DishForm(forms.ModelForm):
     ingredients = forms.ModelMultipleChoiceField(
         queryset=Ingredient.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=True,
     )
 
     class Meta:

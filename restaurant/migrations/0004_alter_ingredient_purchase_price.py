@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('restaurant', '0003_alter_dish_options_cook_contract_size_and_more'),
+        ("restaurant", "0003_alter_dish_options_cook_contract_size_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='ingredient',
-            name='purchase_price',
+            model_name="ingredient",
+            name="purchase_price",
             field=models.DecimalField(decimal_places=2, max_digits=7),
         ),
     ]

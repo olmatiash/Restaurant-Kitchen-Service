@@ -49,7 +49,9 @@ class Dish(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    dish_type = models.ForeignKey(DishType, on_delete=models.CASCADE, related_name="dish_types")
+    dish_type = models.ForeignKey(
+        DishType, on_delete=models.CASCADE, related_name="dish_types"
+    )
     cooks = models.ManyToManyField(Cook, related_name="dishes")
     ingredients = models.ManyToManyField(Ingredient, related_name="dishes")
 
@@ -63,9 +65,7 @@ class Dish(models.Model):
     @property
     def total_cost(self):
         queryset = self.ingredients.all().aggregate(
-            total_cost=models.Sum(
-                "purchase_price"
-            )
+            total_cost=models.Sum("purchase_price")
         )
         total_cost = queryset["total_cost"]
         return round(total_cost, 2) if total_cost is not None else 0.0

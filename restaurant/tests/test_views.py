@@ -35,9 +35,7 @@ class PrivateDishTypeTest(TestCase):
         dish_types = DishType.objects.all()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            list(response.context["dish_type_list"]), list(dish_types)
-        )
+        self.assertEqual(list(response.context["dish_type_list"]), list(dish_types))
         self.assertTemplateUsed(response, "restaurant/dishtype_list.html")
 
     def test_search_dish_type_by_name(self):
@@ -45,14 +43,10 @@ class PrivateDishTypeTest(TestCase):
         DishType.objects.create(name="test name")
         search_name = "test name"
         response = self.client.get(DISH_TYPES_URL, {"name": search_name})
-        context_dish_type = DishType.objects.filter(
-            name__icontains=search_name
-        )
+        context_dish_type = DishType.objects.filter(name__icontains=search_name)
 
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(
-            response.context["dish_type_list"], context_dish_type
-        )
+        self.assertQuerysetEqual(response.context["dish_type_list"], context_dish_type)
 
 
 class PublicCookTest(TestCase):
@@ -67,9 +61,7 @@ class PrivateCookTest(TestCase):
     def setUp(self) -> None:
         self.client = Client()
         self.cook = get_user_model().objects.create_user(
-            username="testcook",
-            password="cook12345",
-            years_of_experience=84
+            username="testcook", password="cook12345", years_of_experience=84
         )
         self.client.force_login(self.cook)
 
@@ -110,16 +102,16 @@ class PublicDishTest(TestCase):
 
 class PrivateDishTest(TestCase):
     def setUp(self) -> None:
-        self.user = get_user_model().objects.create_user(
-            "test", "qaz123", "QWE12345"
-        )
+        self.user = get_user_model().objects.create_user("test", "qaz123", "QWE12345")
         self.client.force_login(self.user)
 
     def test_retrieve_cook(self):
         """Test displaying Dish list when we logged in
         and views using correct template"""
         dish_type = DishType.objects.create(name="test name")
-        Dish.objects.create(name="test name", description="testdesc", price=10.50, dish_type=dish_type)
+        Dish.objects.create(
+            name="test name", description="testdesc", price=10.50, dish_type=dish_type
+        )
         response = self.client.get(DISH_URL)
         dishes = Dish.objects.all()
 
@@ -139,15 +131,15 @@ class PublicIngredientTest(TestCase):
 
 class PrivateIngredientTest(TestCase):
     def setUp(self) -> None:
-        self.user = get_user_model().objects.create_user(
-            "test", "qaz123", "QWE12345"
-        )
+        self.user = get_user_model().objects.create_user("test", "qaz123", "QWE12345")
         self.client.force_login(self.user)
 
     def test_retrieve_cook(self):
         """Test displaying Ingredient list when we logged in
         and views using correct template"""
-        Ingredient.objects.create(name="test name", provider="testprov", unit="1kg", purchase_price=6.50)
+        Ingredient.objects.create(
+            name="test name", provider="testprov", unit="1kg", purchase_price=6.50
+        )
         response = self.client.get(INGREDIENT_URL)
         ingredients = Ingredient.objects.all()
 

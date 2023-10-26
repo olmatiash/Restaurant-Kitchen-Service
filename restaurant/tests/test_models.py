@@ -27,8 +27,7 @@ class ModelsTests(TestCase):
             contract_size=160,
         )
         self.assertEqual(
-            str(cook),
-            f"{cook.username} ({cook.first_name} {cook.last_name})"
+            str(cook), f"{cook.username} ({cook.first_name} {cook.last_name})"
         )
 
     def test_dish_str(self):
@@ -62,10 +61,13 @@ class ModelsTests(TestCase):
         This test creates an Ingredient object and checks if the str representation of
         the object is the same as its name attribute.
         """
-        ingredient = Ingredient.objects.create(name="testname", provider="market", unit="100g", purchase_price=5.50)
+        ingredient = Ingredient.objects.create(
+            name="testname", provider="market", unit="100g", purchase_price=5.50
+        )
         self.assertEqual(
-            str(ingredient), f"{ingredient.name} "
-                             f"({ingredient.provider} "
-                             f"{ingredient.unit} "
-                             f"{ingredient.purchase_price})"
+            str(ingredient),
+            f"{ingredient.name} "
+            f"({ingredient.provider} "
+            f"{ingredient.unit} "
+            f"{ingredient.purchase_price})",
         )
