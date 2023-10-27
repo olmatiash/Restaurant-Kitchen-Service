@@ -76,5 +76,4 @@ class Dish(models.Model):
             markup = ((self.price - self.total_cost) / self.total_cost) * 100
             rounded_markup = round(markup, 0)
             return rounded_markup
-        else:
-            return 0
+        return 0
