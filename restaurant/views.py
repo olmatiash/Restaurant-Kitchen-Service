@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
@@ -20,27 +21,28 @@ from .forms import (
 )
 
 
-@login_required
-def index(request):
-    """View function for the home page of the site."""
+@method_decorator(login_required, name="dispatch")
+class IndexView(View):
+    template_name = "restaurant/index.html"
 
-    num_cooks = Cook.objects.count()
-    num_dishes = Dish.objects.count()
-    num_dish_types = DishType.objects.count()
-    num_ingredients = Ingredient.objects.count()
+    def get(self, request, *args, **kwargs):
+        num_cooks = Cook.objects.count()
+        num_dishes = Dish.objects.count()
+        num_dish_types = DishType.objects.count()
+        num_ingredients = Ingredient.objects.count()
 
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+        num_visits = request.session.get("num_visits", 0)
+        request.session["num_visits"] = num_visits + 1
 
-    context = {
-        "num_cooks": num_cooks,
-        "num_dishes": num_dishes,
-        "num_dish_types": num_dish_types,
-        "num_ingredients": num_ingredients,
-        "num_visits": num_visits + 1,
-    }
+        context = {
+            "num_cooks": num_cooks,
+            "num_dishes": num_dishes,
+            "num_dish_types": num_dish_types,
+            "num_ingredients": num_ingredients,
+            "num_visits": num_visits + 1,
+        }
 
-    return render(request, "restaurant/index.html", context=context)
+        return render(request, "restaurant/index.html", context=context)
 
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
