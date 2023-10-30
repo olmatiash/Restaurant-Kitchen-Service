@@ -53,7 +53,11 @@ urlpatterns = [
     path("dishes/create/", DishCreateView.as_view(), name="dish-create"),
     path("dishes/<int:pk>/update/", DishUpdateView.as_view(), name="dish-update"),
     path("dishes/<int:pk>/delete/", DishDeleteView.as_view(), name="dish-delete"),
-    path("toggle-assign-to-dish/<int:pk>/", ToggleAssignToDishView.as_view(), name="toggle-dish-assign"),
+    path(
+        "toggle-assign-to-dish/<int:pk>/",
+        ToggleAssignToDishView.as_view(),
+        name="toggle-dish-assign",
+    ),
     path("cooks/", CookListView.as_view(), name="cook-list"),
     path("cooks/<int:pk>/", CookDetailView.as_view(), name="cook-detail"),
     path("cooks/create/", CookCreateView.as_view(), name="cook-create"),
