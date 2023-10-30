@@ -47,8 +47,8 @@ class CookExperienceUpdateForm(forms.ModelForm):
 
 
 def validate_years_of_experience(
-    years_of_experience,
-):
+    years_of_experience: str,
+) -> int:
     try:
         years_of_experience = int(years_of_experience)
         if years_of_experience <= 0:
