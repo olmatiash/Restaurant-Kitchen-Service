@@ -10,7 +10,7 @@ class DishType(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
     def get_absolute_url(self):
         return reverse("restaurant:dish-type-detail", kwargs={"pk": self.pk})
@@ -71,7 +71,7 @@ class Dish(models.Model):
         return round(total_cost, 2) if total_cost is not None else 0.0
 
     @property
-    def calculate_margin(self):
+    def margin(self):
         if self.total_cost > 0:
             markup = ((self.price - self.total_cost) / self.total_cost) * 100
             rounded_markup = round(markup, 0)
