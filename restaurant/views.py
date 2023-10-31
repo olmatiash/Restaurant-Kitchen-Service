@@ -1,6 +1,9 @@
+from typing import Dict, Any
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, request
+from django.db.models import QuerySet
+from django.http import HttpResponseRedirect, request, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -25,7 +28,7 @@ from .forms import (
 class IndexView(View):
     template_name = "restaurant/index.html"
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> HttpResponse:
         num_cooks = Cook.objects.count()
         num_dishes = Dish.objects.count()
         num_dish_types = DishType.objects.count()
@@ -51,13 +54,13 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "restaurant/dishtype_list.html"
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, Any]:
         context = super(DishTypeListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = DishTypeNameSearchForm(initial={"name": name})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = DishType.objects.all()
         form = DishTypeNameSearchForm(self.request.GET)
         if form.is_valid():
@@ -93,13 +96,13 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
     queryset = Dish.objects.all().select_related("dish_type")
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, Any]:
         context = super(DishListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = DishNameSearchForm(initial={"name": name})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = Dish.objects.select_related("dish_type")
         form = DishNameSearchForm(self.request.GET)
         if form.is_valid():
@@ -110,7 +113,7 @@ class DishListView(LoginRequiredMixin, generic.ListView):
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
     model = Dish
 
-    def dish_detail_view(self, dish_id):
+    def dish_detail_view(self, dish_id) -> HttpResponse:
         dish = Dish.objects.get(pk=dish_id)
         dish(total_cost=dish.ingredients.all().sum())
         context = {
@@ -140,13 +143,13 @@ class CookListView(LoginRequiredMixin, generic.ListView):
     model = Cook
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, Any]:
         context = super(CookListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
         context["search_form"] = CookUsernameSearchForm(initial={"username": username})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = get_user_model().objects.all()
         form = CookUsernameSearchForm(self.request.GET)
 
@@ -177,7 +180,7 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class ToggleAssignToDishView(View):
-    def post(self, request, pk):
+    def post(self, request, pk) -> HttpResponseRedirect:
         cook = Cook.objects.get(id=request.user.id)
         if Dish.objects.get(id=pk) in cook.dishes.all():
             cook.dishes.remove(pk)
@@ -190,13 +193,13 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
     model = Ingredient
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(IngredientListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = IngredientNameSearchForm(initial={"name": name})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = Ingredient.objects.all()
         form = IngredientNameSearchForm(self.request.GET)
 

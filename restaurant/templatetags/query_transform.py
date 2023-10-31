@@ -4,7 +4,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def query_transform(request, **kwargs):
+def query_transform(request, **kwargs) -> str:
     updated = request.GET.copy()
     for k, v in kwargs.items():
         if v is not None:

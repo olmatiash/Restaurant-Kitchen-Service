@@ -12,7 +12,7 @@ class DishType(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("restaurant:dish-type-detail", kwargs={"pk": self.pk})
 
 
@@ -27,7 +27,7 @@ class Cook(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("restaurant:cook-detail", kwargs={"pk": self.pk})
 
 
@@ -63,7 +63,7 @@ class Dish(models.Model):
         return self.name
 
     @property
-    def total_cost(self):
+    def total_cost(self) -> float:
         queryset = self.ingredients.all().aggregate(
             total_cost=models.Sum("purchase_price")
         )
@@ -71,7 +71,7 @@ class Dish(models.Model):
         return round(total_cost, 2) if total_cost is not None else 0.0
 
     @property
-    def margin(self):
+    def margin(self) -> float:
         if self.total_cost > 0:
             markup = ((self.price - self.total_cost) / self.total_cost) * 100
             rounded_markup = round(markup, 0)

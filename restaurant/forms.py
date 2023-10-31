@@ -33,7 +33,7 @@ class CookCreationForm(UserCreationForm):
             "contract_size",
         )
 
-    def clean_years_of_experience(self):
+    def clean_years_of_experience(self) -> int:
         return validate_years_of_experience(self.cleaned_data["years_of_experience"])
 
 
@@ -42,7 +42,7 @@ class CookExperienceUpdateForm(forms.ModelForm):
         model = Cook
         fields = ["years_of_experience", "contract_size"]
 
-    def clean_years_of_experience(self):
+    def clean_years_of_experience(self) -> int:
         return validate_years_of_experience(self.cleaned_data["years_of_experience"])
 
 
