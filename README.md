@@ -1,10 +1,21 @@
 # Restaurant Kitchen Service Project
 
-Django project for managing communication & rules between cooks on the kitchen
+Django project for managing communication and rules between cooks on the kitchen.
+* Manage the database of cooks, their personal data, the size of the contract and work experience
+* Manage the database of ingredients, monitor where the selected ingredient is included, its purchase price and supplier.
+* Manage the database of dishes, monitor which chef prepares the selected dish, the composition of the product, 
+* Adjust the prices of ready-made dishes and monitor the marginality of dishes.
+
+
 
 ## Check it out!
 
 [Restaurant kitchen service deployed to Render](https://restaurant-kitchen-service-3bui.onrender.com)
+
+## Test user
+
+login: user
+password: user12345
 
 ## Installation
 
