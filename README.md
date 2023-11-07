@@ -4,7 +4,7 @@ Django project for managing communication & rules between cooks on the kitchen
 
 ## Check it out!
 
-render
+[Restaurant kitchen service deployed to Render](https://restaurant-kitchen-service-3bui.onrender.com)
 
 ## Installation
 
