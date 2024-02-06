@@ -1,0 +1,36 @@
+{% extends "base-presentation.html" %}
+
+{% block content %}
+  {% include "includes/sidebar.html" %}
+  <div class="p-3 text-left">
+    <h1>
+      {{ ingredient.name }}
+      <a href="{% url 'restaurant:ingredient-delete' pk=ingredient.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+
+      <a href="{% url 'restaurant:ingredient-update' pk=ingredient.id %}" class="btn btn-primary link-to-page">
+        Update
+      </a>
+    </h1>
+    <p>Provider:
+      {{ ingredient.provider }}
+      <br>
+      Unit:
+      {{ ingredient.unit }}
+      <br>
+      Purchase price:
+      {{ ingredient.purchase_price }}
+    </p>
+    <h1>Dishes</h1>
+    <ul>
+      {% for dish in ingredient.dishes.all %}
+        <li>
+          <a class="text-gradient text-primary" href="{% url "restaurant:dish-detail" pk=dish.id %} ">{{ dish.name }}</a>
+          ({{ dish.dish_type }})
+        </li>
+      {% endfor %}
+    </ul>
+    <h4><a class="text-gradient text-primary" href="{% url 'restaurant:ingredient-list' %}">Back to Ingredients</a></h4>
+  </div>
+{% endblock %}

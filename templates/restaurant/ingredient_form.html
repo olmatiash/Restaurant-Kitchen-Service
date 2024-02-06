@@ -1,0 +1,15 @@
+{% extends "base-presentation.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  {% include "includes/sidebar.html" %}
+  <div class="p-3 text-left">
+    <h1>{{ object|yesno:"Update,Create" }} ingredient</h1>
+    <form action="" method="post" novalidate class="form-inline max-width-200">
+      {% csrf_token %}
+      {{ form|crispy }}
+
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+  </div>
+{% endblock %}

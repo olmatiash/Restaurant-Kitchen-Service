@@ -1,0 +1,64 @@
+{% extends 'base-presentation.html' %}
+
+{% block content %}
+  {% include "includes/sidebar.html" %}
+  <div class="p-3 text-left">
+    <h1>
+      {{ dish.name }}
+      <a href="{% url 'restaurant:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+
+      <a href="{% url 'restaurant:dish-update' pk=dish.id %}" class="btn btn-primary link-to-page">
+        Update
+      </a>
+    </h1>
+    <p>Dish Type:
+      {{ dish.dish_type.name }}
+      <br>
+      Description:
+      {{ dish.description }}
+      <br>
+      Ingredients:
+        {% for ingredient in dish.ingredients.all %}
+        {{ ingredient.name }}
+        {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      <br>
+      Total cost:
+      {{ dish.total_cost }} $
+      <br>
+      Price:
+      {{ dish.price }} $
+      <br>
+      Margin:
+      {{ dish.margin }} %
+    </p>
+    <h1>
+      Cooks
+
+      <form method="post" action="{% url 'restaurant:toggle-dish-assign' pk=dish.id %}">
+        {% csrf_token %}
+        {% if dish in user.dishes.all %}
+          <button type="submit" class="btn btn-danger link-to-page">
+            Remove me from this dish
+          </button>
+        {% else %}
+          <button type="submit" class="btn btn-success link-to-page">
+            Assign me to this dish
+          </button>
+        {% endif %}
+      </form>
+
+    </h1>
+    <hr>
+    <ul>
+      {% for cook in dish.cooks.all %}
+        <li><a class="text-gradient text-primary" href="{{ cook.get_absolute_url }}">{{ cook.username }} {% if user == cook %} (Me){% endif %}</a>
+        ({{ cook.first_name }} {{ cook.last_name }})</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h4><a class="text-gradient text-primary" href="{% url 'restaurant:dish-list' %}">Back to Dishes</a></h4>
+  </div>
+{% endblock %}

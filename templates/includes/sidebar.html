@@ -1,0 +1,17 @@
+<nav class="navbar-expand-lg navbar-light bg-light">
+  <div class="container mt-3 mb-3">
+    <div class="navbar-absolute d-flex">
+      <a href="{% url 'restaurant:index' %}" class="nav-item lead text-gradient text-primary flex-grow-1">Home</a>
+      <a href="{% url 'restaurant:cook-list' %}" class="nav-item lead text-gradient text-primary flex-grow-1">All cooks</a>
+      <a href="{% url 'restaurant:dish-list' %}" class="nav-item lead text-gradient text-primary flex-grow-1">All dishes</a>
+      <a href="{% url 'restaurant:dish-type-list' %}" class="nav-item lead text-gradient text-primary flex-grow-1">All dish types</a>
+      <a href="{% url 'restaurant:ingredient-list' %}" class="nav-item lead text-gradient text-primary flex-grow-1">All ingredients</a>
+      {% if user.is_authenticated %}
+        <span class="nav-item lead text-gradient text-dark flex-grow-1">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></span>
+        <a href="{% url 'logout'%}?next={{request.path}}" class="nav-item lead text-gradient text-danger flex-grow-1">Logout</a>
+      {% else %}
+        <a href="{% url 'login'%}?next={{request.path}}" class="nav-item lead text-gradient text-dark flex-grow-1">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

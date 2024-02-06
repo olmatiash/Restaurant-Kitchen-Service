@@ -1,0 +1,12 @@
+{% extends "base-presentation.html" %}
+
+{% block content %}
+  {% include "includes/sidebar.html" %}
+  <h1>Delete dish type?</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Yes" class="btn btn-danger">
+    <a class="btn btn-primary" href="{% url 'restaurant:dish-type-detail' pk=dishtype.id %}">Cancel</a>
+  </form>
+{% endblock %}
