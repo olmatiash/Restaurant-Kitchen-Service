@@ -14,8 +14,8 @@ Django project for managing communication and rules between cooks on the kitchen
 
 ## Test user
 
-login: user
-password: user12345
+login: admin
+password: 1qazcde3
 
 ## Installation
 
